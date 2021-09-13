@@ -1,4 +1,6 @@
 ## Digital E-commerce Shop
+Laravel 8, TailwindCSS, Alpine.js, Livewire, Stripe API, Axios
+
 
  **ToDo List:**
 - [ ] Implement Authentication System
