@@ -30,7 +30,7 @@
                         <li>
                             <a
                                 @if (array_key_exists('id', $result))
-                                    href="{{ route('product.show', $result['id']) }}"
+                                    href="{{ route('product.show', $result['slug']) }}"
                                 @else
                                     href="#"
                                 @endif
@@ -45,21 +45,12 @@
                                             Undefined
                                         @endif
                                     </div>
-                                    {{-- <div class="text-gray-600">
-                                        @if (array_key_exists('artistName', $result))
-                                            {{ $result['artistName'] }}
-                                        @else
-                                            No Artist
-                                        @endif
-                                    </div> --}}
                                 </div>
                             </a>
                         </li>
                     @empty
                         <li class="px-4 py-4">No results found for "{{ $search }}"</li>
                     @endforelse
-
-
                 </ul>
             @endif
         </div>

@@ -1,22 +1,32 @@
-<html lang="en">
-   <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Digital Ecommerce</title>
-      <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-      <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
-      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      <livewire:styles/>
-   </head>
-   <body>
-      @if(!request()->route()->named('checkout.index'))
-      <x-navbar/>
-      @endif
-      <div class="bg-white">
-         {{ $slot }}
-      </div>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-      <livewire:scripts/>
-   </body>
+        <title>{{ config('app.name', 'Laravel') }}</title>
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <livewire:styles />
+        <style>
+            [x-cloak] { display: none !important; }
+        </style>
+
+        <!-- Scripts -->
+        <script src="{{ mix('js/app.js') }}" defer></script>
+    </head>
+    <body>
+        @if(!request()->route()->named('checkout.index'))
+            @livewire('navigation-menu')
+        @endif
+
+        <!-- Page Content -->
+        <div class="bg-white">
+            {{ $slot }}
+        </div>
+
+        <livewire:scripts />
+    </body>
 </html>
-

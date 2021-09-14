@@ -31,4 +31,27 @@ class StripeController extends Controller
 			'url' => $response['url']
 		]);
 	}
+
+	public function addPaymentMethod(Request $request) {
+		$stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+		$customer_id = auth()->user()->stripe_customer_id;
+
+		$card_response = $stripe->paymentMethods->create([
+			'type' => 'card',
+			'card' => [
+				'number' => $request['number'],
+				'exp_month' => $request['exp_month'],
+				'exp_year' => $request['exp_year'],
+				'cvc' => $request['cvc'],
+			],
+		]);
+
+		$response = $stripe->paymentMethods->attach([
+			$card_response['id'],
+			[ 'customer' => $customer_id ]
+		]);
+
+
+		return $response;
+	}
 }

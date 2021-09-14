@@ -20,8 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/create-session', [StripeController::class, 'createSession'])->name('create-session');
-
 Route::get('/products', function() {
     return response()->json(Product::filter(request(['search']))->get());
 })->name('get-products');
+
+Route::post('/create-session', [StripeController::class, 'createSession'])->name('create-session');
+
+Route::middleware(['auth:sanctum', 'verified'])
+    ->post('/add-payment-method', [StripeController::class, 'addPaymentMethod'])
+    ->name('add-payment-method');

@@ -3,7 +3,7 @@ Laravel 8, TailwindCSS, Alpine.js, Livewire, Stripe API, Axios
 
 
  **ToDo List:**
-- [ ] Implement Authentication System
+- [x] Implement Authentication System
 - [ ] CRUD for Products
 - - [ ] FAQ 
 - - [ ] Product Highlights
