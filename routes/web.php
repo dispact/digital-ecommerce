@@ -37,3 +37,4 @@ Route::get('/order/success', function(Request $request) {
 //     return view('dashboard');
 // })->name('dashboard');
 
+require __DIR__.'/fortify.php';
