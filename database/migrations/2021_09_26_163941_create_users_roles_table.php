@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomerColumns extends Migration
+class CreateUsersRolesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class CreateCustomerColumns extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('stripe_id')->nullable()->index();
+        Schema::create('users_roles', function (Blueprint $table) {
+            $table->primary(['user_id', 'role_id']);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('role_id')->constrained()->onDelete('cascade');
         });
     }
 
@@ -25,10 +27,6 @@ class CreateCustomerColumns extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn([
-                'stripe_id',
-            ]);
-        });
+        Schema::dropIfExists('users_roles');
     }
 }

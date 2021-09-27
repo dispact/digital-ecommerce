@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCustomerColumns extends Migration
+class CreateOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,12 @@ class CreateCustomerColumns extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('stripe_id')->nullable()->index();
+        Schema::create('orders', function (Blueprint $table) {
+            $table->id();
+            $table->string('stripe_session_id');
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('product_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -25,10 +29,6 @@ class CreateCustomerColumns extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn([
-                'stripe_id',
-            ]);
-        });
+        Schema::dropIfExists('orders');
     }
 }

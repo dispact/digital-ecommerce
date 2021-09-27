@@ -9,7 +9,7 @@ class ProductController extends Controller
 {
     public function index() {
         return view('product.index', [
-            'products' => Product::paginate(8)
+            'products' => Product::paginate(10)
         ]); 
     }
 
@@ -17,5 +17,9 @@ class ProductController extends Controller
         return view('product.show', [
             'product' => $product
         ]);
+    }
+
+    public function create() {
+        return view('product.create');
     }
 }

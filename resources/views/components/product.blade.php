@@ -2,7 +2,7 @@
     <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
        <img 
           src="{{ $product->image }}" 
-          alt="Payment application dashboard screenshot with transaction table, financial highlights, and main clients on colorful purple background." 
+          alt="{{ $product->title }}" 
           class="object-center object-cover"
        >
        <div class="flex items-end opacity-0 p-4 group-hover:opacity-100" aria-hidden="true">

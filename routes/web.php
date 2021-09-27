@@ -1,8 +1,11 @@
 <?php
 
+use App\Models\User;
+use App\Models\Order;
 use App\Models\Product;
-use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 
 /*
@@ -16,22 +19,24 @@ use App\Http\Controllers\ProductController;
 |
 */
 
-Route::get('/', [ProductController::class, 'index'])->name('product.index');
+Route::get('/', function() {
+    return view('shop.index', [
+        'products' => Product::paginate(8)
+    ]);
+})->name('shop.index');
+
+Route::group(['middleware' => 'role:admin'], function() {
+    Route::get('/manage/products', [ProductController::class, 'index'])->name('product.index');
+    Route::get('/manage/products/new', [ProductController::class, 'create'])->name('product.create');
+});
 
 Route::prefix('/product')->group(function() {
     Route::get('/{product:slug}', [ProductController::class, 'show'])->name('product.show');
 });
 
-Route::get('/order/success', function(Request $request) {
-    $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
-    $order_session = $stripe->checkout->sessions->retrieve($request->query('session_id'));
-    $customer_name = $stripe->customers->retrieve($order_session['customer'])['name'];
-    $product = Product::where('slug', $order_session['metadata']['product_id'])->first();
-    return view('order.success', [
-        'product' => $product,
-        'customer_name' => $customer_name
-    ]);
-});
+Route::get('/order/success', [OrderController::class, 'success']);
+
+Route::get('/orders', [OrderController::class, 'history'])->name('order.history');
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');

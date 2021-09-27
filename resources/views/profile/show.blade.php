@@ -3,7 +3,6 @@
 		x-data="{
 			showGeneral: true,
 			showPassword: false,
-			showPayment: false,
 			show2FA: false,
 			showSessions: false,
 			showAccount: false,
@@ -11,7 +10,6 @@
 			clearStates(tabName) {
 				this.showGeneral = false;
 				this.showPassword = false;
-				this.showPayment = false;
 				this.show2FA = false;
 				this.showSessions = false;
 				this.showAccount = false;
@@ -31,9 +29,8 @@
 					case 'account':
 						this.showAccount = true;
 						break;
-					case 'payment':
-						this.showPayment = true;
-						break;
+					default:
+						this.showGeneral = true;
 				}
 			}
 		}"
@@ -80,12 +77,6 @@
 											Password
 										</button>
 
-										<button @click="clearStates('payment');"
-											:class="showPayment ? 'border-purple-500 text-purple-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' "
-											class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm cursor-pointer">
-											Payment Methods
-										</button>
-
 										<button @click="clearStates('2fa');"
 											:class="show2FA ? 'border-purple-500 text-purple-600' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700' "
 											class="whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm cursor-pointer">
@@ -120,10 +111,6 @@
 										@livewire('profile.update-password-form')
 									</div>
 								@endif              	
-							</div>
-
-							<div x-show="showPayment" class="mt-2">
-								@livewire('payment-methods')
 							</div>
 
 							<div x-show="show2FA" class="mt-10">
