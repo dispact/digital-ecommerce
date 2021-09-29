@@ -9,12 +9,18 @@ class ProductController extends Controller
 {
     public function index() {
         return view('product.index', [
-            'products' => Product::paginate(10)
+            'products' => Product::latest()->paginate(10)
         ]); 
     }
 
     public function show(Product $product) {
         return view('product.show', [
+            'product' => $product
+        ]);
+    }
+
+    public function edit(Product $product) {
+        return view('product.edit', [
             'product' => $product
         ]);
     }

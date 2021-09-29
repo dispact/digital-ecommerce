@@ -20,14 +20,13 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::get('/', function() {
-    return view('shop.index', [
-        'products' => Product::paginate(8)
-    ]);
+    return view('shop.index');
 })->name('shop.index');
 
 Route::group(['middleware' => 'role:admin'], function() {
     Route::get('/manage/products', [ProductController::class, 'index'])->name('product.index');
     Route::get('/manage/products/new', [ProductController::class, 'create'])->name('product.create');
+    Route::get('/manage/products/edit/{product:slug}', [ProductController::class, 'edit'])->name('product.edit');
 });
 
 Route::prefix('/product')->group(function() {

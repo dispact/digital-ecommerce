@@ -41,12 +41,7 @@
 				<!-- Product image -->
 				<div class="lg:row-end-1 lg:col-span-4">
 					<div class="aspect-w-4 aspect-h-3 rounded-lg bg-gray-100 overflow-hidden">
-						<img 
-						@if(str_contains($product->image, 'http'))
-							src="{{ $product->image }}"
-						@else
-							src="{{ env('APP_URL') . '/' . $product->image }}" 
-						@endif
+						<img src="{{ str_contains($product->image, 'http') ? $product->image : Storage::url($product->image) }}"
 							alt="{{ $product->title }}" 
 							class="object-center object-cover"
 						>

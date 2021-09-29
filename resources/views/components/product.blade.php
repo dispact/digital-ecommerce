@@ -1,7 +1,7 @@
 <div class="relative group">
     <div class="aspect-w-4 aspect-h-3 rounded-lg overflow-hidden bg-gray-100">
        <img 
-          src="{{ $product->image }}" 
+          src="{{ str_contains($product->image, 'http') ? $product->image : Storage::url($product->image) }}" 
           alt="{{ $product->title }}" 
           class="object-center object-cover"
        >
@@ -23,6 +23,6 @@
        <p>${{ number_format(($product->price / 100), 2, '.', '') }}</p>
     </div>
     <p class="mt-1 text-sm text-gray-500">
-       UI Kit
+      Category
     </p>
  </div>

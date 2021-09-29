@@ -18,7 +18,7 @@ class CreateProductsTable extends Migration
             $table->string('title');
             $table->string('slug')->unique();
             $table->text('description');
-            $table->double('price', 8, 2);
+            $table->integer('price');
             $table->string('image')->nullable();
             $table->string('file')->nullable();
             $table->timestamps();

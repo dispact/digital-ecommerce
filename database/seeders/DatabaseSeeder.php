@@ -65,5 +65,13 @@ class DatabaseSeeder extends Seeder
             'price' => '5999',
             'image' => 'https://s3.amazonaws.com/creativetim_bucket/products/138/original/opt_bdp_thumbnail.jpg?1547454513'
         ]);
+        \App\Models\Role::create([
+            'name' => 'user',
+            'slug' => 'user'
+        ]);
+        \App\Models\Role::create([
+            'name' => 'admin',
+            'slug' => 'admin'
+        ]);
     }
 }

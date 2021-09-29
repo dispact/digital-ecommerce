@@ -11,7 +11,7 @@ class StripeController extends Controller
 		$stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
 		$response = $stripe->checkout->sessions->create([
-			'success_url' => 'http://127.0.0.1:8888/order/success?session_id={CHECKOUT_SESSION_ID}',
+			'success_url' => env('APP_URL') . '/order/success?session_id={CHECKOUT_SESSION_ID}',
 			'cancel_url' => url()->previous(),
 			'payment_method_types' => ['card'],
 			'line_items' => [

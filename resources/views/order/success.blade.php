@@ -13,7 +13,7 @@
        {{-- Items --}}
        <div class="mt-10 border-t border-gray-200">
           <div class="py-10 flex space-x-6">
-             <img src="{{ $product->image }}" 
+             <img src="{{ env('APP_URL') . '/' . $product->image }}" 
                 alt="{{ $product->title }}" 
                 class="flex-none w-20 h-20 object-center object-cover bg-gray-100 rounded-lg sm:w-40 sm:h-40"
              />
