@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Product;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 
@@ -17,10 +18,10 @@ class SearchDropdown extends Component
             return;
         }
 
-        // $response = Http::get('localhost:8001/api/products?search=' . $this->search);
-        $response = Http::get(env('API_URL') . '/api/products?search=' . $this->search);
-
-        $this->searchResults = $response->json();
+        $response = Product::filter(['search' => $newValue])->get();
+        
+        $this->searchResults = $response->toArray();
+        
     }
 
     public function render()

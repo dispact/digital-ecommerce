@@ -106,7 +106,9 @@
                             {{ __('Remove Photo') }}
                         </x-jet-secondary-button>
                     
-                        <img src="{{ is_object($photo) ? $photo->temporaryUrl() :  Storage::url($photo) }}"
+                        <img src="{{ is_object($photo) ? $photo->temporaryUrl() : 
+							(str_contains($photo, 'http') ? $photo : Storage::url($photo))
+						}}"
                             class="mt-4 rounded-md"
                         >
                     @endif

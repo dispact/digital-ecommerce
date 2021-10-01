@@ -15,12 +15,18 @@ class Create extends Component
     public $price;
     public $photo;
     public $slug;
+    public $highlight1;
+    public $highlight2;
+    public $highlight3;
 
     protected $rules = [
         'title' => 'required|min:6|unique:products,title',
         'description' => 'required|min:25',
         'photo' => 'required|image',
-        'price' => 'required|int'
+        'price' => 'required|int',
+        'highlight1' => 'required|min:6',
+        'highlight2' => 'required|min:6',
+        'highlight3' => 'required|min:6'
     ];
 
     public function updatingPrice($newValue) {
