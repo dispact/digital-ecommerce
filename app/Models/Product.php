@@ -19,4 +19,12 @@ class Product extends Model
             )
         );
     }
+
+    public function highlights() {
+        return $this->hasMany(Highlight::class);
+    }
+
+    public function reviews() {
+        return $this->hasMany(Review::class);
+    }
 }

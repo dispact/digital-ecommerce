@@ -114,6 +114,7 @@
 					</div>
 				</div>
 			</div>
+
 			<div>
 				<h3 class="text-md leading-6 font-medium text-gray-900 mt-4 mb-4">
 					Highlights
@@ -153,14 +154,14 @@
 			</div>
 		</div>
 
-		<div class="pt-5">
+		<div class="pt-5 pb-5">
 			<div class="flex justify-end">
-			<button type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-				Cancel
-			</button>
-			<button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-				Create
-			</button>
+				<a href="{{ route('product.index') }}" type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+					Cancel
+				</a>
+				<button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+					Create
+				</button>
 			</div>
 		</div>
 	</form>

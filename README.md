@@ -7,10 +7,10 @@ Laravel 8, TailwindCSS, Alpine.js, Livewire, Stripe API, Axios
 - [X] CRUD for Products
 - [ ] Product Details
 - - [ ] FAQ 
-- - [ ] Highlights
+- - [x] Highlights
 - - [ ] Licensing
 - [x] Create Orders Table
-- [ ] Create Review System
+- [x] Create Review System
 - [x] Order History
 - [ ] Statistic Dashboard
 - [ ] Email Download after Purchase

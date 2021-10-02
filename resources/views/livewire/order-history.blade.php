@@ -20,7 +20,7 @@
 							<div>
 								<dt class="font-medium text-gray-900">Order number</dt>
 								<dd class="mt-1 text-gray-500">
-									WU88191111
+									{{ sprintf('%07d', $order->id) }}
 								</dd>
 							</div>
 							<div class="hidden sm:block">
@@ -40,7 +40,7 @@
 							<div class="relative flex justify-end lg:hidden">
 								<div class="flex items-center">
 									<button @click="show = !show" @click.away="show = false" type="button" class="-m-2 p-2 flex items-center text-gray-400 hover:text-gray-500" id="menu-0-button" aria-expanded="false" aria-haspopup="true">
-										<span class="sr-only">Options for order WU88191111</span>
+										<span class="sr-only">Options for order {{ sprintf('%07d', $order->id) }}</span>
 										<!-- Heroicon name: outline/dots-vertical -->
 										<svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
 											<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z" />
@@ -84,14 +84,16 @@
 							</div>
 
 							<div class="hidden lg:col-span-2 lg:flex lg:items-center lg:justify-end lg:space-x-4">
+								@if(!auth()->user()->hasReviewedProduct($order->product->id))
+									<a href="{{ route('product.show', $order->product->slug) }}#reviews" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+										<span>Leave a Review</span>
+										<span class="sr-only">{{ sprintf('%07d', $order->id) }}</span>
+									</a>
+								@endif
 								<a href="#" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 									<span>Download Product</span>
-									<span class="sr-only">WU88191111</span>
+									<span class="sr-only">{{ sprintf('%07d', $order->id) }}</span>
 								</a>
-								{{-- <a href="#" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-									<span>View Invoice</span>
-									<span class="sr-only">for order WU88191111</span>
-								</a> --}}
 							</div>
 						</div>
 
@@ -101,7 +103,7 @@
 							<li class="p-4 sm:p-6">
 							<div class="flex items-center sm:items-start">
 								<div class="flex-shrink-0 w-20 h-20 bg-gray-200 rounded-lg overflow-hidden sm:w-40 sm:h-40">
-									<img src="{{ $order->product->image }}" alt="{{ $order->product->title }}" class="w-full h-full object-center object-cover">
+									<x-product.image :product="$order->product" class="w-full h-full object-center object-cover"/>
 								</div>
 								<div class="flex-1 ml-6 text-sm">
 									<div class="font-medium text-gray-900 sm:flex sm:justify-between">

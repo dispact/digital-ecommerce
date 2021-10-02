@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Product;
 
 use App\Models\Product;
 use Livewire\Component;
+use App\Models\Highlight;
 use Livewire\WithFileUploads;
 
 class Create extends Component
@@ -54,6 +55,10 @@ class Create extends Component
             'description' => $this->description,
             'price' => $this->price,
             'image' => $photo
+        ])->highlights()->saveMany([
+            new Highlight(['content' => $this->highlight1]),
+            new Highlight(['content' => $this->highlight2]),
+            new Highlight(['content' => $this->highlight3])
         ]);
 
         return redirect(route('product.show', $this->slug));

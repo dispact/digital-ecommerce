@@ -6,7 +6,7 @@
             Thank you for your purchase!
          </p>
          <p class="mt-2 text-base text-gray-500">
-         Your order has been processed and will be delivered to your email soon.
+            Your order has been processed and will be delivered to your email soon.
          </p>
       </div>
 
@@ -17,10 +17,8 @@
                class="flex-none w-20 h-20 object-center object-cover bg-gray-100 rounded-lg sm:w-40 sm:h-40"
             />
             <div class="flex-auto flex flex-col">
-               <h4 class="font-medium text-gray-900">
-                  <a href="{{ route('product.show', $product->id) }}">
-                     {{ $product->title }}
-                  </a>
+               <h4 class="font-medium text-gray-900 hover:text-blue-500">
+                  <x-product.title-link :product="$product"/>
                </h4>
                <p class="mt-2 text-sm text-gray-600">
                   {{ $product->description }}
@@ -31,7 +29,7 @@
                      <div class="flex">
                         <dt class="font-medium text-gray-900">Price</dt>
                         <dd class="ml-2 text-gray-700">
-                           ${{ number_format(($product->price / 100), 2, '.', '') }}
+                           <x-product.price :price="$product->price" />
                         </dd>
                      </div>
                   </dl>

@@ -17,13 +17,27 @@ class Edit extends Component
     public $photo;
     public $slug;
     public $product;
+    public $highlight1;
+    public $highlight2;
+    public $highlight3;
 
     public function rules() {
         return [
             'title' => 'required|min:6|unique:products,title,' . $this->id_,
             'description' => 'required|min:25',
             'price' => 'required|int',
-            'photo' => 'required|image'
+            'photo' => 'required|image',
+            'highlight1' => 'required|min:6',
+            'highlight2' => 'required|min:6',
+            'highlight3' => 'required|min:6'
+        ];
+    }
+
+    public function messages() {
+        return [
+            'highlight1.required' => 'First highlight is required',
+            'highlight2.required' => 'Second highlight is required',
+            'highlight3.required' => 'Third highlight is required'
         ];
     }
 
@@ -42,6 +56,9 @@ class Edit extends Component
         $this->price = $product->price;
         $this->photo = $product->image;
         $this->product = $product;
+        $this->highlight1 = $product->highlights[0]->content;
+        $this->highlight2 = $product->highlights[1]->content;
+        $this->highlight3 = $product->highlights[2]->content;
     }
 
     public function deletePhoto() {
@@ -61,7 +78,10 @@ class Edit extends Component
             $this->photo = $this->photo->storePubliclyAs('product-photos', $this->slug . '.jpg', 'public');
         }
         $this->product->image = $this->photo;
-        $this->product->save();
+        $this->product->highlights[0]->content = $this->highlight1;
+        $this->product->highlights[1]->content = $this->highlight2;
+        $this->product->highlights[2]->content = $this->highlight3;
+        $this->product->push();
 
         return redirect(route('product.index'));
     }

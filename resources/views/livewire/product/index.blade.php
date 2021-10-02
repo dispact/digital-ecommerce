@@ -44,8 +44,8 @@
                                         <x-product.image :product="$product" class="h-10 w-10 rounded-sm" />
                                     </div>
                                     <div class="ml-4">
-                                        <div class="text-sm font-medium text-gray-900">
-                                            {{ $product->title }}
+                                        <div class="text-sm font-medium text-gray-900 hover:text-blue-600">
+                                            <x-product.title-link :product="$product" />
                                         </div>
                                     </div>
                                     </div>
@@ -56,11 +56,11 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                                    Active
+                                        Active
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    ${{ $product->price / 100 }}
+                                    <x-product.price :price="$product->price"/>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                     <a href="{{ route('product.edit', $product->slug) }}" class="text-indigo-500 hover:text-indigo-800">
