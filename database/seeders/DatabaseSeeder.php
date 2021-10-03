@@ -13,15 +13,26 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\Product::factory()->create([
+        $product = \App\Models\Product::factory()->create([
             'title' => 'Fusion UI Kit',
             'slug' => 'fusion-ui-kit',
             'price' => '1499',
             'image' => 'https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-01.jpg'
-        ])->highlights()->saveMany([
+        ]);
+        $product->highlights()->saveMany([
             new \App\Models\Highlight(['content' => '200+ SVG icons in 3 unique styles']),
             new \App\Models\Highlight(['content' => 'Compatible with Figma, Sketch, and Adobe XD']),
             new \App\Models\Highlight(['content' => 'Drawn on 24 x 24 pixel grid'])
+        ]);
+        $product->faqs()->saveMany([
+            new \App\Models\Faq([
+                'question' => 'What format are these icons?',
+                'answer' => 'The icons are in SVG (Scalable Vector Graphic) format. They can be imported into your design tool of choice and used directly in code.'
+            ]),
+            new \App\Models\Faq([
+                'question' => 'Can I use the icons at different sizes?',
+                'answer' => "Yes. The icons are drawn on a 24 x 24 pixel grid, but the icons can be scaled to different sizes as needed. We don't recommend going smaller than 20 x 20 or larger than 64 x 64 to retain legibility and visual balance."
+            ])
         ]);
         \App\Models\Product::factory()->create([
             'title' => 'Marketing Icon Pack',

@@ -1,0 +1,259 @@
+<div class="md:p-0 p-4">
+	<form wire:submit.prevent="submit" class="mt-8 space-y-8 divide-y divide-gray-200">
+		<div class="space-y-8 divide-y divide-gray-200">
+			<div>
+				<h3 class="text-lg leading-6 font-medium text-gray-900">
+					{{ $heading }}
+				</h3>
+	
+				<div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+					<div class="sm:col-span-6">
+						<label for="title" class="block text-sm font-medium text-gray-700">
+							Title
+						</label>
+						<div class="mt-1">
+							<input 
+								class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 
+									rounded-md sm:text-sm border-gray-300
+									@error('title') border-red-500 text-red-900 @enderror"
+								wire:model.debounce.500ms="title"
+								type="text" 
+								name="slug" 
+								id="slug" 
+							>
+							@error('title') 
+								<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+							@enderror
+						</div>
+					</div>
+		
+					<div class="sm:col-span-6">
+						<label for="description" class="block text-sm font-medium text-gray-700">
+							Description
+						</label>
+						<div class="mt-1">
+							<textarea 
+								wire:model.debounce.500ms="description"
+								id="description" 
+								name="description" 
+								rows="4" 
+								class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm 
+									border border-gray-300 rounded-md
+									@error('description') border-red-500 text-red-900  @enderror"
+							></textarea>
+							@error('description') 
+								<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+							@enderror
+						</div>
+					</div>
+
+					<div class="sm:col-span-6 md:col-span-1">
+						<label for="price" class="block text-sm font-medium text-gray-700">Price</label>
+						<div class="mt-1 relative rounded-md shadow-sm">
+							<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+								<span class="text-gray-500 sm:text-sm">
+									$
+								</span>
+							</div>
+							<input 
+								wire:model.debounce.500ms="price"
+								type="text" 
+								name="price" 
+								id="price" 
+								class="focus:ring-indigo-500 focus:border-indigo-500 block w-full pl-7 pr-12 
+									sm:text-sm border-gray-300 rounded-md
+									@error('price') border-red-500 text-red-900 @enderror" 
+								placeholder="2499" 
+								aria-describedby="price-currency"
+							>
+							<div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+								<span class="text-gray-500 sm:text-sm" id="price-currency">
+									USD
+								</span>
+							</div>
+						</div>
+						@error('price') 
+							<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+						@enderror
+					</div>
+
+					<div class="sm:col-span-6" x-data>
+						<label for="cover-photo" class="block text-sm font-medium text-gray-700">
+							Photo
+						</label>
+							<input class="hidden" 
+								type="file"   
+								accept="image/*" 
+								wire:model="photo"
+								x-ref="photo"
+							/>
+									
+							<x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
+									<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-gray-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+										wire:loading wire:target="photo"
+									>
+										<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+										<path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+									</svg>
+									{{ __('Select A Photo') }}
+							</x-jet-secondary-button>
+
+						@error('photo') 
+							<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+						@enderror
+		
+							@if ($photo)
+									<x-jet-secondary-button type="button" class="mt-2" wire:click="deletePhoto">
+										{{ __('Remove Photo') }}
+									</x-jet-secondary-button>
+							
+                           <img
+                           @if($type == 'create')
+                              src="{{ $photo->temporaryUrl() }}"
+                           @elseif($type == 'edit')
+                              src="{{ is_object($photo) ? $photo->temporaryUrl() : 
+                                 (str_contains($photo, 'http') ? $photo : Storage::url($photo))
+                              }}"
+                           @endif
+                              class="mt-4 rounded-md"
+                           >
+							@endif
+					</div>
+				</div>
+			</div>
+
+			<div>
+				<h3 class="text-md leading-6 font-medium text-gray-900 mt-4 mb-4">
+					Highlights
+				</h3>
+				<div class="space-y-2">
+					<input class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 
+							focus:border-indigo-500 sm:text-sm border-gray-300
+							@error('highlight1') border-red-500 text-red-900 @enderror"
+						type="text" 
+						wire:model="highlight1"
+						placeholder="First highlight here..."
+					>
+					@error('highlight1') 
+						<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+					@enderror
+					<input class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 
+							focus:border-indigo-500 sm:text-sm border-gray-300
+							@error('highlight2') border-red-500 text-red-900 @enderror"
+						type="text" 
+						wire:model="highlight2"
+						placeholder="Second highlight here..."
+					>
+					@error('highlight2') 
+						<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+					@enderror
+					<input class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 
+							focus:border-indigo-500 sm:text-sm border-gray-300
+							@error('highlight3') border-red-500 text-red-900 @enderror"
+						type="text" 
+						wire:model="highlight3"
+						placeholder="Third highlight here..."
+					>
+					@error('highlight3') 
+						<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+					@enderror
+				 </div>
+			</div>
+
+			<div>
+				<h3 class="text-md leading-6 font-medium text-gray-900 mt-4 mb-4">
+					Frequently Asked Questions
+				</h3>
+				<div class="space-y-4">
+					<div>
+						<label for="question1" class="text-xs">Question #1</label>
+						<input class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 
+								focus:border-indigo-500 sm:text-sm border-gray-300
+								@error('question1') border-red-500 text-red-900 @enderror"
+							type="text" 
+							wire:model="question1"
+							placeholder="First question here..."
+						>
+						@error('question1') 
+							<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+						@enderror
+						<label for="answer1" class="text-xs">Answer #1</label>
+						<input class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 
+								focus:border-indigo-500 sm:text-sm border-gray-300
+								@error('answer1') border-red-500 text-red-900 @enderror"
+							type="text" 
+							wire:model="answer1"
+							placeholder="First answer here..."
+						>
+						@error('answer1') 
+							<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+						@enderror
+					</div>
+					<div>
+						<label for="question2" class="text-xs">Question #2</label>
+						<input class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 
+								focus:border-indigo-500 sm:text-sm border-gray-300
+								@error('question2') border-red-500 text-red-900 @enderror"
+							type="text" 
+							wire:model="question2"
+							placeholder="Second question here..."
+						>
+						@error('question2') 
+							<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+						@enderror
+						<label for="answer2" class="text-xs">Answer #2</label>
+						<input class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 
+								focus:border-indigo-500 sm:text-sm border-gray-300
+								@error('answer2') border-red-500 text-red-900 @enderror"
+							type="text" 
+							wire:model="answer2"
+							placeholder="Second answer here..."
+						>
+						@error('answer2') 
+							<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+						@enderror
+					</div>
+					<div>
+						<label for="question3" class="text-xs">Question #3</label>
+						<input class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 
+								focus:border-indigo-500 sm:text-sm border-gray-300
+								@error('question3') border-red-500 text-red-900 @enderror"
+							type="text" 
+							wire:model="question3"
+							placeholder="Third question here..."
+						>
+						@error('question3') 
+							<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+						@enderror
+						<label for="answer3" class="text-xs">Answer #3</label>
+						<input class="flex-1 min-w-0 block w-full px-3 py-2 rounded-md focus:ring-indigo-500 
+								focus:border-indigo-500 sm:text-sm border-gray-300
+								@error('answer3') border-red-500 text-red-900 @enderror"
+							type="text" 
+							wire:model="answer3"
+							placeholder="Third answer here..."
+						>
+						@error('answer3') 
+							<p class="mt-1 text-xs text-red-500 font-medium">{{ $message }}</p>
+						@enderror
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="pt-5 pb-5">
+			<div class="flex justify-end">
+				<a href="{{ route('product.index') }}" type="button" class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+					Cancel
+				</a>
+				<button type="submit" class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+					@if($type=="create")
+						Create
+					@elseif($type=="edit")
+						Update
+					@endif
+				</button>
+			</div>
+		</div>
+	</form>
+</div>

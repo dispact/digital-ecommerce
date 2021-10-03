@@ -1,15 +1,7 @@
 <x-app-layout>
 	<div x-data="{
-		showReviews: true,
-		showFAQ: false,
-		showLicense: false,
+		showTab: window.location.hash ? window.location.hash : '#reviews',
 		loadingPurchase: false,
-	
-		closeTabs() {
-			this.showReviews = false;
-			this.showFAQ = false;
-			this.showLicense = false;
-		},
 	
 		purchase(id, name, price) {
 			this.loadingPurchase = true;
@@ -126,7 +118,7 @@
 					{{-- License --}}
 					<div class="border-t border-gray-200 mt-10 pt-10">
 						<h3 class="text-sm font-medium text-gray-900">License</h3>
-						<p class="mt-4 text-sm text-gray-500">For personal and professional use. You cannot resell or redistribute these icons in their original or modified state. <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">Read full license</a></p>
+						<p class="mt-4 text-sm text-gray-500">For personal and professional use. You cannot resell or redistribute these icons in their original or modified state. <a href="#license" class="font-medium text-indigo-600 hover:text-indigo-500">Read full license</a></p>
 					</div>
 	
 				</div>
@@ -136,42 +128,43 @@
 						<div class="border-b border-gray-200">
 							<div class="-mb-px flex space-x-8" aria-orientation="horizontal" role="tablist">
 								<!-- Selected: "border-indigo-600 text-indigo-600", Not Selected: "border-transparent text-gray-700 hover:text-gray-800 hover:border-gray-300" -->
-								<button @click="closeTabs();showReviews = true;" class="border-transparent text-gray-700 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap py-6 border-b-2 font-medium text-sm" aria-controls="tab-panel-reviews" role="tab" type="button">
+								<button @click="showTab = '#reviews'" class="border-transparent text-gray-700 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap py-6 border-b-2 font-medium text-sm" aria-controls="tab-panel-reviews" role="tab" type="button">
 									Customer Reviews
 								</button>
-								<button @click="closeTabs();showFAQ = true;" class="border-transparent text-gray-700 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap py-6 border-b-2 font-medium text-sm" aria-controls="tab-panel-faq" role="tab" type="button">
+								<button @click="showTab = '#faq'" class="border-transparent text-gray-700 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap py-6 border-b-2 font-medium text-sm" aria-controls="tab-panel-faq" role="tab" type="button">
 									FAQ
 								</button>
-								<button @click="closeTabs();showLicense = true;" class="border-transparent text-gray-700 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap py-6 border-b-2 font-medium text-sm" aria-controls="tab-panel-license" role="tab" type="button">
+								<button @click="showTab = '#license'" class="border-transparent text-gray-700 hover:text-gray-800 hover:border-gray-300 whitespace-nowrap py-6 border-b-2 font-medium text-sm" aria-controls="tab-panel-license" role="tab" type="button">
 									License
 								</button>
 							</div>
 						</div>
 	
 						<!-- 'Customer Reviews' panel, show/hide based on tab state -->
-						<div x-show="showReviews" id="reviews" class="-mb-10" aria-labelledby="tab-reviews" role="tabpanel" tabindex="0">
+						<div x-show="showTab == '#reviews'" id="reviews" class="-mb-10" aria-labelledby="tab-reviews" role="tabpanel" tabindex="0">
 							@livewire('reviews', ['product' => $product])
 						</div>
 	
 						<!-- 'FAQ' panel, show/hide based on tab state -->
-						<dl x-show="showFAQ" id="faq" class="text-sm text-gray-500" aria-labelledby="tab-faq" role="tabpanel" tabindex="0">
+						<dl x-show="showTab == '#faq'" id="faq" class="text-sm" aria-labelledby="tab-faq" role="tabpanel" tabindex="0">
 							<h3 class="sr-only">Frequently Asked Questions</h3>
 			
-							<dt class="mt-10 font-medium text-gray-900">What format are these icons?</dt>
-							<dd class="mt-2 prose prose-sm max-w-none text-gray-500">
-								<p>The icons are in SVG (Scalable Vector Graphic) format. They can be imported into your design tool of choice and used directly in code.</p>
-							</dd>
-			
-							<dt class="mt-10 font-medium text-gray-900">Can I use the icons at different sizes?</dt>
-							<dd class="mt-2 prose prose-sm max-w-none text-gray-500">
-								<p>Yes. The icons are drawn on a 24 x 24 pixel grid, but the icons can be scaled to different sizes as needed. We don&#039;t recommend going smaller than 20 x 20 or larger than 64 x 64 to retain legibility and visual balance.</p>
-							</dd>
+							@forelse($product->faqs as $faq) 
+								<dt class="mt-10 font-medium text-gray-900">
+									{{ $faq->question }}
+								</dt>
+								<dd class="mt-2 prose prose-sm max-w-none text-gray-500">
+									<p>{{ $faq->answer }}</p>
+								</dd>
+							@empty
+								<p class="mt-4 text-sm">There are no frequently asked questions for this product</p>
+							@endforelse
 		
 						<!-- More FAQs... -->
 						</dl>
 	
 						<!-- 'License' panel, show/hide based on tab state -->
-						<div x-show="showLicense" id="license" class="pt-10" aria-labelledby="tab-license" role="tabpanel" tabindex="0">
+						<div x-show="showTab == '#license'" id="license" class="pt-4" aria-labelledby="tab-license" role="tabpanel" tabindex="0">
 							<h3 class="sr-only">License</h3>
 			
 							<div class="prose prose-sm max-w-none text-gray-500">

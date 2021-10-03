@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Product;
 
+use App\Models\Faq;
 use App\Models\Product;
 use Livewire\Component;
 use App\Models\Highlight;
@@ -19,15 +20,37 @@ class Create extends Component
     public $highlight1;
     public $highlight2;
     public $highlight3;
+    public $question1;
+    public $question2;
+    public $question3;
+    public $answer1;
+    public $answer2;
+    public $answer3;
 
     protected $rules = [
         'title' => 'required|min:6|unique:products,title',
         'description' => 'required|min:25',
-        'photo' => 'required|image',
+        'photo' => 'required|mimes:png,jpg,jpeg,svg',
         'price' => 'required|int',
         'highlight1' => 'required|min:6',
         'highlight2' => 'required|min:6',
-        'highlight3' => 'required|min:6'
+        'highlight3' => 'required|min:6',
+        'answer1' => 'required_unless:question1,null',
+        'answer2' => 'required_unless:question2,null',
+        'answer3' => 'required_unless:question3,null'
+    ];
+
+    protected $messages = [
+        'title.required' => 'A title is required',
+        'description.required' => 'A description is required',
+        'price.required' => 'A price is required',
+        'photo.required' => 'A photo is required',
+        'highlight1.required' => 'First highlight is required',
+        'highlight2.required' => 'Second highlight is required',
+        'highlight3.required' => 'Third highlight is required',
+        'answer1.required_unless' => 'Answer #1 is required if Question #1 is not blank.',
+        'answer2.required_unless' => 'Answer #2 is required if Question #2 is not blank.',
+        'answer3.required_unless' => 'Answer #3 is required if Question #3 is not blank.'
     ];
 
     public function updatingPrice($newValue) {
@@ -49,16 +72,24 @@ class Create extends Component
 
         $photo = $this->photo->storeAs('public/product-photos', $this->slug . '.jpg');
 
-        Product::create([
+        $product = Product::create([
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
             'price' => $this->price,
             'image' => $photo
-        ])->highlights()->saveMany([
+        ]);
+
+        $product->highlights()->saveMany([
             new Highlight(['content' => $this->highlight1]),
             new Highlight(['content' => $this->highlight2]),
             new Highlight(['content' => $this->highlight3])
+        ]);
+
+        $product->faqs()->saveMany([
+            new Faq(['question' => $this->question1, 'answer' => $this->answer1]),
+            new Faq(['question' => $this->question2, 'answer' => $this->answer2]),
+            new Faq(['question' => $this->question3, 'answer' => $this->answer3]),
         ]);
 
         return redirect(route('product.show', $this->slug));
