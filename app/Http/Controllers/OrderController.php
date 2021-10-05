@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Order;
 use App\Models\User;
+use App\Models\Order;
 use App\Models\Product;
+use App\Mail\OrderSuccess;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
 {
@@ -23,11 +25,13 @@ class OrderController extends Controller
         // See if order exists in orders table, if not, create it
         if(!Order::where('stripe_session_id', $request->query('session_id'))->first()) {
             try {
-                Order::create([
+                $order = Order::create([
                     'stripe_session_id' => $request->query('session_id'),
                     'user_id' => User::where('stripe_id', $order_session['customer'])->first()->id,
                     'product_id' => $product->id 
                 ]);
+
+                Mail::to($request->user()->email)->send(new OrderSuccess($order));
             } catch (\exception $e) {
                 dd($e);
             }

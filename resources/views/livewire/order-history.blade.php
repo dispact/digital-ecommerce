@@ -90,7 +90,7 @@
 										<span class="sr-only">{{ sprintf('%07d', $order->id) }}</span>
 									</a>
 								@endif
-								<a href="#" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+								<a href="{{ $order->product->downloadUrl() }}" class="flex items-center justify-center bg-white py-2 px-2.5 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
 									<span>Download Product</span>
 									<span class="sr-only">{{ sprintf('%07d', $order->id) }}</span>
 								</a>

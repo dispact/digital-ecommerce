@@ -1,12 +1,14 @@
 <div>
 	<h3 class="sr-only">Customer Reviews</h3>
-	
-	@if(auth()->user()->hasOrderedProduct($product->id) && !auth()->user()->hasReviewedProduct($product->id))
-		<h3 class="text-gray-700 hover:text-gray-800 mt-4 font-medium text-sm">
-			Leave a Review
-		</h3>
-		@livewire('review-form', ['product' => $product])
-	@endif
+
+	@auth
+		@if(auth()->user()->hasOrderedProduct($product->id) && !auth()->user()->hasReviewedProduct($product->id))
+			<h3 class="text-gray-700 hover:text-gray-800 mt-4 font-medium text-sm">
+				Leave a Review
+			</h3>
+			@livewire('review-form', ['product' => $product])
+		@endif
+	@endauth
 
 	<div class="divide-y divide-gray-200">
 		@forelse($reviews as $review)

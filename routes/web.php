@@ -5,6 +5,7 @@ use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 
@@ -33,9 +34,12 @@ Route::prefix('/product')->group(function() {
     Route::get('/{product:slug}', [ProductController::class, 'show'])->name('product.show');
 });
 
-Route::get('/order/success', [OrderController::class, 'success']);
+Route::group(['middleware' => 'auth'], function() {
+    Route::get('/order/success', [OrderController::class, 'success']);
+    Route::get('/orders', [OrderController::class, 'history'])->name('order.history');
+    Route::get('/download/{filename}', [FileController::class, 'download'])->name('file.download');
+});
 
-Route::get('/orders', [OrderController::class, 'history'])->name('order.history');
 
 // Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 //     return view('dashboard');

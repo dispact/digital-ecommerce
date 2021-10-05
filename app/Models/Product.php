@@ -31,4 +31,8 @@ class Product extends Model
     public function faqs() {
         return $this->hasMany(Faq::class);
     }
+
+    public function downloadUrl() {
+        return route('file.download', explode('/', $this->file)[1]);
+    }
 }

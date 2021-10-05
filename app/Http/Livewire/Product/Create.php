@@ -16,6 +16,7 @@ class Create extends Component
     public $description;
     public $price;
     public $photo;
+    public $file;
     public $slug;
     public $highlight1;
     public $highlight2;
@@ -31,6 +32,7 @@ class Create extends Component
         'title' => 'required|min:6|unique:products,title',
         'description' => 'required|min:25',
         'photo' => 'required|mimes:png,jpg,jpeg,svg',
+        'file' => 'required|file|max:10240',
         'price' => 'required|int',
         'highlight1' => 'required|min:6',
         'highlight2' => 'required|min:6',
@@ -45,6 +47,7 @@ class Create extends Component
         'description.required' => 'A description is required',
         'price.required' => 'A price is required',
         'photo.required' => 'A photo is required',
+        'file.required' => 'A file is required',
         'highlight1.required' => 'First highlight is required',
         'highlight2.required' => 'Second highlight is required',
         'highlight3.required' => 'Third highlight is required',
@@ -65,19 +68,25 @@ class Create extends Component
         $this->photo = '';
     }
 
+    public function deleteFile() {
+        $this->file = '';
+    }
+
     public function submit() {
         $this->validate();
 
         $this->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $this->title)));
 
-        $photo = $this->photo->storeAs('public/product-photos', $this->slug . '.jpg');
-
+        $photo = $this->photo->store('public/product-photos');
+        $file = $this->file->store('files');
+        
         $product = Product::create([
             'title' => $this->title,
             'slug' => $this->slug,
             'description' => $this->description,
             'price' => $this->price,
-            'image' => $photo
+            'image' => $photo,
+            'file' => $file
         ]);
 
         $product->highlights()->saveMany([
@@ -86,11 +95,16 @@ class Create extends Component
             new Highlight(['content' => $this->highlight3])
         ]);
 
-        $product->faqs()->saveMany([
-            new Faq(['question' => $this->question1, 'answer' => $this->answer1]),
-            new Faq(['question' => $this->question2, 'answer' => $this->answer2]),
-            new Faq(['question' => $this->question3, 'answer' => $this->answer3]),
-        ]);
+        $QAs = [
+			[ $this->question1, $this->answer1 ], 
+			[ $this->question2, $this->answer2 ],
+			[ $this->question3, $this->answer3 ]
+		];
+
+        for($i = 0; $i < 3; $i++) {
+			if ($QAs[$i][0] && $QAs[$i][1])
+                $product->faqs()->save(new Faq(['question' => $QAs[$i][0], 'answer' => $QAs[$i][1]]));
+		}  
 
         return redirect(route('product.show', $this->slug));
     }

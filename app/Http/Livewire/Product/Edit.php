@@ -17,6 +17,7 @@ class Edit extends Component
 	public $description;
 	public $price;
 	public $photo;
+	public $file;
 	public $slug;
 	public $product;
 	public $highlight1;
@@ -48,6 +49,7 @@ class Edit extends Component
 		'description.required' => 'A description is required',
 		'price.required' => 'A price is required',
 		'photo.required' => 'A photo is required',
+		'file.required' => 'A file is required',
 		'highlight1.required' => 'First highlight is required',
 		'highlight2.required' => 'Second highlight is required',
 		'highlight3.required' => 'Third highlight is required',
@@ -71,6 +73,7 @@ class Edit extends Component
 		$this->description = $product->description;
 		$this->price = $product->price;
 		$this->photo = $product->image;
+		$this->file = $product->file;
 
 		$this->highlight1 = $product->highlights[0]->content;
 		$this->highlight2 = $product->highlights[1]->content;
@@ -94,11 +97,18 @@ class Edit extends Component
 		$this->photo = '';
 	}
 
+	public function deleteFile() {
+		$this->file = '';
+	}
+
 	public function submit() {
 		$this->validate();
 
 		if ($this->photo != $this->product->image || $this->photo == '')
 			$this->validate(['photo' => 'required|mimes:png,jpg,jpeg,svg']);
+
+		if ($this->file != $this->product->file || $this->file == '')
+			$this->validate(['file' => 'required|file|max:10240']);
 
 		if (!$this->title == $this->product->title)
 			$this->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $this->title)));
@@ -109,10 +119,15 @@ class Edit extends Component
 		$this->product->description = $this->description;
 		$this->product->price = $this->price;
 		if (is_object($this->photo)) {
-			Storage::disk('public')->delete('product-photos/' . $this->slug . '.jpg');
-			$this->photo = $this->photo->storePubliclyAs('product-photos', $this->slug . '.jpg', 'public');
+			Storage::delete($this->product->image);
+			$this->photo = $this->photo->store('public/product-photos');
+		}
+		if (is_object($this->file)) {
+			Storage::delete($this->product->file);
+			$this->file = $this->file->store('files');
 		}
 		$this->product->image = $this->photo;
+		$this->product->file = $this->file;
 		$this->product->highlights[0]->content = $this->highlight1;
 		$this->product->highlights[1]->content = $this->highlight2;
 		$this->product->highlights[2]->content = $this->highlight3;
@@ -125,12 +140,12 @@ class Edit extends Component
 
 		for($i = 0; $i < 3; $i++) {
 			if ($QAs[$i][0] && $QAs[$i][1]) {
-					if (array_key_exists($i, $this->product->faqs->toArray())) {
-						$this->product->faqs[$i]->question = $QAs[$i][0];
-						$this->product->faqs[$i]->answer = $QAs[$i][1];
-					} else {
-						$this->product->faqs()->save(new Faq(['question' => $QAs[$i][0], 'answer' => $QAs[$i][1]]));
-					}
+				if (array_key_exists($i, $this->product->faqs->toArray())) {
+					$this->product->faqs[$i]->question = $QAs[$i][0];
+					$this->product->faqs[$i]->answer = $QAs[$i][1];
+				} else {
+					$this->product->faqs()->save(new Faq(['question' => $QAs[$i][0], 'answer' => $QAs[$i][1]]));
+				}
 			}
 		}  
 		
