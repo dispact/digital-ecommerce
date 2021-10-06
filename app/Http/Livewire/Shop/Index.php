@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Shop;
 
 use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ProductList extends Component
+class Index extends Component
 {
     use WithPagination;
 
     public function render()
     {
-        return view('livewire.product-list', [
-            'products' => Product::paginate(8)
+        return view('livewire.shop.index', [
+            'products' => Product::latest()->paginate(8)
         ]);
     }
 }

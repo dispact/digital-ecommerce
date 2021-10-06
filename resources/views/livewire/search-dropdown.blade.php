@@ -1,4 +1,4 @@
-<div x-show="showSearch" class="flex-1 flex items-center justify-center px-2 lg:ml-6 lg:justify-end">
+<div x-show="showSearch" x-cloak class="flex-1 flex items-center justify-center px-2 lg:ml-6 lg:justify-end">
     <div class="max-w-lg w-full lg:max-w-xs">
         <label for="search" class="sr-only">Search</label>
         <div class="relative">

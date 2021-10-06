@@ -27,6 +27,7 @@
             {{ $slot }}
         </div>
 
+        <x-modal />
         <livewire:scripts />
     </body>
 </html>

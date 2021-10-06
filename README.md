@@ -1,16 +1,15 @@
 ## Digital E-commerce Shop
-Laravel 8, TailwindCSS, Alpine.js, Livewire, Stripe API, Axios
+Laravel 8, TailwindCSS, Alpine.js, Livewire, Stripe API
 
 
  **ToDo List:**
 - [x] Implement Authentication System
-- [ ] CRUD for Products
-- - [ ] FAQ 
-- - [ ] Product Highlights
-- - [ ] Licensing
-- [ ] Create Customers Table
-- [ ] Create Orders Table
-- [ ] Create Review System
-- [ ] Order History
+- [X] CRUD for Products
+- [x] Product Details
+- - [x] FAQ 
+- - [x] Highlights
+- [x] Create Orders Table
+- [x] Create Review System
+- [x] Order History
+- [x] Email Download after Purchase
 - [ ] Statistic Dashboard
-- [ ] Email Download after Purchase

@@ -3,6 +3,7 @@
 use Laravel\Fortify\Features;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Fortify\RegisteredUserController;
+use App\Http\Controllers\Fortify\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\PasswordController;
 use Laravel\Fortify\Http\Controllers\NewPasswordController;
 use Laravel\Fortify\Http\Controllers\VerifyEmailController;
@@ -11,7 +12,6 @@ use Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController;
 use Laravel\Fortify\Http\Controllers\PasswordResetLinkController;
 use Laravel\Fortify\Http\Controllers\ProfileInformationController;
 use Laravel\Fortify\Http\Controllers\ConfirmablePasswordController;
-use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
 use Laravel\Fortify\Http\Controllers\ConfirmedPasswordStatusController;
 use Laravel\Fortify\Http\Controllers\EmailVerificationPromptController;
 use Laravel\Fortify\Http\Controllers\TwoFactorAuthenticationController;

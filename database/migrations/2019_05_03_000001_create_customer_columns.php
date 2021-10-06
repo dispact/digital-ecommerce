@@ -15,8 +15,6 @@ class CreateCustomerColumns extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('stripe_id')->nullable()->index();
-            $table->string('pm_type')->nullable();
-            $table->string('pm_last_four', 4)->nullable();
         });
     }
 
@@ -30,8 +28,6 @@ class CreateCustomerColumns extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn([
                 'stripe_id',
-                'pm_type',
-                'pm_last_four'
             ]);
         });
     }

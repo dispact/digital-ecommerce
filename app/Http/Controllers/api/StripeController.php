@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 class StripeController extends Controller
 {
 	public function createSession(Request $request) {
-		$stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+		$stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
 
 		$response = $stripe->checkout->sessions->create([
-			'success_url' => 'http://127.0.0.1:8000/order/success?session_id={CHECKOUT_SESSION_ID}',
+			'success_url' => env('APP_URL') . '/order/success?session_id={CHECKOUT_SESSION_ID}',
 			'cancel_url' => url()->previous(),
 			'payment_method_types' => ['card'],
 			'line_items' => [
@@ -24,6 +24,7 @@ class StripeController extends Controller
 			],
 			'mode' => 'payment',
 			'metadata' => [ 'product_id' => $request['id'] ],
+			'customer' => $request['customerId']
 		]);
 
 		return response()->json([
@@ -34,7 +35,7 @@ class StripeController extends Controller
 
 	public function addPaymentMethod(Request $request) {
 		$stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
-		$customer_id = auth()->user()->stripe_customer_id;
+		$customer_id = auth()->user()->stripe_id;
 
 		$card_response = $stripe->paymentMethods->create([
 			'type' => 'card',
