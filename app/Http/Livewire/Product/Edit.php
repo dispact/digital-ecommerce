@@ -119,12 +119,14 @@ class Edit extends Component
 		$this->product->description = $this->description;
 		$this->product->price = $this->price;
 		if (is_object($this->photo)) {
-			Storage::delete($this->product->image);
-			$this->photo = $this->photo->store('public/product-photos');
+			Storage::disk('s3')->delete($this->product->image);
+			$path = Storage::disk('s3')->put('product-images', $this->photo);
+			$this->photo = Storage::disk('s3')->url($path);
 		}
 		if (is_object($this->file)) {
-			Storage::delete($this->product->file);
-			$this->file = $this->file->store('files');
+			Storage::disk('s3')->delete($this->product->file);
+			$path = Storage::disk('s3')->put('product-files', $this->file);
+			$this->file = $path;
 		}
 		$this->product->image = $this->photo;
 		$this->product->file = $this->file;

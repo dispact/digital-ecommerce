@@ -13,101 +13,106 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $product = \App\Models\Product::factory()->create([
-            'title' => 'Fusion UI Kit',
-            'slug' => 'fusion-ui-kit',
-            'price' => '1499',
-            'image' => 'https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-01.jpg'
+        $product1 = \App\Models\Product::factory()->create([
+            'title' => 'Social Katch-Up',
+            'slug' => 'social-katch-up',
+            'price' => '999',
+            'description' => 'Create your very own social media with this AMAZING UI Kit! Created by https://dribbble.com/sanshizm',
+            'image' => 'https://portfolio-ecommerce-bucket.s3.us-east-2.amazonaws.com/product-images/8UQSr9nCzrc6aCxJYbVBm6L0wRiQLRH1z6Iq9e6r.png',
+            'file' => 'product-files/GrQbbcWzF1kcK6evU2G39wkjBpBdqhUWuJIIGTZr.txt'
         ]);
-        $product->highlights()->saveMany([
-            new \App\Models\Highlight(['content' => '200+ SVG icons in 3 unique styles']),
-            new \App\Models\Highlight(['content' => 'Compatible with Figma, Sketch, and Adobe XD']),
-            new \App\Models\Highlight(['content' => 'Drawn on 24 x 24 pixel grid'])
+        $product1->highlights()->saveMany([
+            new \App\Models\Highlight(['content' => 'Profile, feeds, notifications, auth pages, and more!']),
+            new \App\Models\Highlight(['content' => 'Clean looking UI kit!']),
+            new \App\Models\Highlight(['content' => 'Ready for implementation!'])
         ]);
-        $product->faqs()->saveMany([
+        $product1->faqs()->saveMany([
             new \App\Models\Faq([
-                'question' => 'What format are these icons?',
-                'answer' => 'The icons are in SVG (Scalable Vector Graphic) format. They can be imported into your design tool of choice and used directly in code.'
-            ]),
-            new \App\Models\Faq([
-                'question' => 'Can I use the icons at different sizes?',
-                'answer' => "Yes. The icons are drawn on a 24 x 24 pixel grid, but the icons can be scaled to different sizes as needed. We don't recommend going smaller than 20 x 20 or larger than 64 x 64 to retain legibility and visual balance."
+                'question' => 'Does this contain any code?',
+                'answer' => "No, this is only the user interface."
             ])
         ]);
-        \App\Models\Product::factory()->create([
-            'title' => 'Marketing Icon Pack',
-            'slug' => 'marketing-icon-pack',
-            'price' => '1799',
-            'image' => 'https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-02.jpg'
-        ])->highlights()->saveMany([
-            new \App\Models\Highlight(['content' => '200+ SVG icons in 3 unique styles']),
-            new \App\Models\Highlight(['content' => 'Compatible with Figma, Sketch, and Adobe XD']),
-            new \App\Models\Highlight(['content' => 'Drawn on 24 x 24 pixel grid'])
+
+        $product2 = \App\Models\Product::factory()->create([
+            'title' => 'Online Courses UI Kit',
+            'slug' => 'online-courses-ui-kit',
+            'price' => '999',
+            'description' => 'Create your very own e-learning platform with this AMAZING UI Kit! Created by https://dribbble.com/creativepox',
+            'image' => 'https://portfolio-ecommerce-bucket.s3.us-east-2.amazonaws.com/product-images/U6lUBdRXXdvrc8Jra8oUsNuciUPZ7SUNnLZNahcw.png',
+            'file' => 'product-files/6pivfTs5HJBxDLRdG8T4FaU9iLjmNSPUIeFS3x7i.txt'
         ]);
-        \App\Models\Product::factory()->create([
-            'title' => 'Scaffold Wireframe Kit',
-            'slug' => 'scaffold-wireframe-kit',
-            'price' => '2999',
-            'image' => 'https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-03.jpg'
-        ])->highlights()->saveMany([
-            new \App\Models\Highlight(['content' => '200+ SVG icons in 3 unique styles']),
-            new \App\Models\Highlight(['content' => 'Compatible with Figma, Sketch, and Adobe XD']),
-            new \App\Models\Highlight(['content' => 'Drawn on 24 x 24 pixel grid'])
+        $product2->highlights()->saveMany([
+            new \App\Models\Highlight(['content' => 'Course layouts, reviews, about, and more!']),
+            new \App\Models\Highlight(['content' => 'Clean looking UI kit!']),
+            new \App\Models\Highlight(['content' => 'Ready for implementation!'])
         ]);
-        \App\Models\Product::factory()->create([
-            'title' => 'Bones Wireframe Kit',
-            'slug' => 'bones-wireframe-kit',
-            'price' => '2999',
-            'image' => 'https://tailwindui.com/img/ecommerce-images/product-page-05-related-product-04.jpg'
-        ])->highlights()->saveMany([
-            new \App\Models\Highlight(['content' => '200+ SVG icons in 3 unique styles']),
-            new \App\Models\Highlight(['content' => 'Compatible with Figma, Sketch, and Adobe XD']),
-            new \App\Models\Highlight(['content' => 'Drawn on 24 x 24 pixel grid'])
+        $product2->faqs()->saveMany([
+            new \App\Models\Faq([
+                'question' => 'Does this contain any code?',
+                'answer' => "No, this is only the user interface."
+            ])
         ]);
-        \App\Models\Product::factory()->create([
-            'title' => 'Soft UI Dashboard PRO',
-            'slug' => 'soft-ui-dashboard-pro',
-            'description' => 'The most complex and innovative Dashboard Made by Creative Tim. Check our latest Premium Bootstrap 5 Dashboard. Designed for those who like bold elements and beautiful websites. Made of hundred of elements, designed blocks, and fully coded pages, Soft UI Dashboard PRO is ready to help you create stunning websites and web apps. We created many examples for pages like Sign In, Profile, and so on. Just choose between a Basic Design, an illustration, or a cover and you are good to go!',
-            'price' => '5999',
-            'image' => 'https://s3.amazonaws.com/creativetim_bucket/products/487/original/opt_sdp_thumbnail.jpg?1622812208'
-        ])->highlights()->saveMany([
-            new \App\Models\Highlight(['content' => '200+ SVG icons in 3 unique styles']),
-            new \App\Models\Highlight(['content' => 'Compatible with Figma, Sketch, and Adobe XD']),
-            new \App\Models\Highlight(['content' => 'Drawn on 24 x 24 pixel grid'])
+
+        $product3 = \App\Models\Product::factory()->create([
+            'title' => 'Login Screens UI Kit',
+            'slug' => 'login-screens-ui-kit',
+            'price' => '999',
+            'description' => 'Looking for some UI for your authentication systems? Look no more! The Login Screens UI Kit comes loaded with different variations of auth user interfaces! Created by https://dribbble.com/omstudio',
+            'image' => 'https://portfolio-ecommerce-bucket.s3.us-east-2.amazonaws.com/product-images/yjno4QxFZCFpnfF58yweb5kFp9wuMrPPtaXWNl2q.png',
+            'file' => 'product-files/9HfVJIFRC9flNXDY3sRnwr2SV1lH7HxxKVWHGHXn.txt'
         ]);
-        \App\Models\Product::factory()->create([
-            'title' => 'Notus PRO React',
-            'slug' => 'notus-pro-react',
-            'description' => 'Start your development with a premium UI Kit and Admin components library for Tailwind CSS & React. Let Notus PRO React amaze you with its cool features and build tools that will get your project to a whole new level! Notus PRO React features multiple HTML and React elements, and it comes with dynamic components for React. It is based on Tailwind Starter Kit and Notus React by Creative Tim. This beautiful UI Kit & Admin is built with multiple components for different projects, such as Presentation websites, Blog websites, E-Commerce website platforms, and Admin Dashboard websites. It also features components for authentication and error handling. Besides these sections, it also comes with an extra components category that can be used for different purposes, such as blog sections, features sections, FAQ sections, Pricing, and many more. Check all the sections here. Speed up your web development with an awesome product made by Creative Tim. If you like bright and fresh colors, you will love this Tailwind CSS Template! It features a huge number of components that can help you create amazing websites.',
-            'price' => '7999',
-            'image' => 'https://s3.amazonaws.com/creativetim_bucket/products/452/original/opt_np_react_thumbnail.jpg?1619006214'
-        ])->highlights()->saveMany([
-            new \App\Models\Highlight(['content' => '200+ SVG icons in 3 unique styles']),
-            new \App\Models\Highlight(['content' => 'Compatible with Figma, Sketch, and Adobe XD']),
-            new \App\Models\Highlight(['content' => 'Drawn on 24 x 24 pixel grid'])
+        $product3->highlights()->saveMany([
+            new \App\Models\Highlight(['content' => 'Email/phone/social logins, forgot password, and more!']),
+            new \App\Models\Highlight(['content' => 'Clean looking UI kit!']),
+            new \App\Models\Highlight(['content' => 'Ready for implementation!'])
         ]);
-        \App\Models\Product::factory()->create([
-            'title' => 'Now UI Dashboard PRO',
-            'slug' => 'now-ui-dashboard-pro',
-            'description' => 'Now UI Dashboard PRO is a beautiful Bootstrap 4 admin dashboard with a large number of components, designed to look beautiful, clean and organized. If you are looking for a tool to manage and visualize data about your business, this dashboard is the thing for you. It combines colors that are easy on the eye, spacious cards, beautiful typography, and graphics.',
-            'price' => '4999',
-            'image' => 'https://s3.amazonaws.com/creativetim_bucket/products/72/original/opt_nudp_thumbnail.jpg?1517588807'
-        ])->highlights()->saveMany([
-            new \App\Models\Highlight(['content' => '200+ SVG icons in 3 unique styles']),
-            new \App\Models\Highlight(['content' => 'Compatible with Figma, Sketch, and Adobe XD']),
-            new \App\Models\Highlight(['content' => 'Drawn on 24 x 24 pixel grid'])
+        $product3->faqs()->saveMany([
+            new \App\Models\Faq([
+                'question' => 'Does this contain any code?',
+                'answer' => "No, this is only the user interface."
+            ])
         ]);
-        \App\Models\Product::factory()->create([
-            'title' => 'Black Dashboard PRO React',
-            'slug' => 'black-dashboard-pro-react',
-            'description' => 'Black Dashboard PRO React is a beautiful Bootstrap 4 (reactstrap) Admin Dashboard that comes in 2 versions: Dark and Light Mode. If you are looking for a tool to manage and visualize data about your business, this dashboard is the thing for you. It combines colors that are easy on the eye, spacious cards, beautiful typography, and graphics.',
-            'price' => '5999',
-            'image' => 'https://s3.amazonaws.com/creativetim_bucket/products/138/original/opt_bdp_thumbnail.jpg?1547454513'
-        ])->highlights()->saveMany([
-            new \App\Models\Highlight(['content' => '200+ SVG icons in 3 unique styles']),
-            new \App\Models\Highlight(['content' => 'Compatible with Figma, Sketch, and Adobe XD']),
-            new \App\Models\Highlight(['content' => 'Drawn on 24 x 24 pixel grid'])
+
+        $product4 = \App\Models\Product::factory()->create([
+            'title' => 'Productivity Dashboards',
+            'slug' => 'productivity-dashboards',
+            'price' => '1199',
+            'description' => 'Four AMAZING, clean looking dashboards to increase productivity! Created by https://dribbble.com/amadacs',
+            'image' => 'https://portfolio-ecommerce-bucket.s3.us-east-2.amazonaws.com/product-images/TzShrS6EBseGIuoyX8DUJDbWh0MKGbxVWgHxgmmt.png',
+            'file' => 'product-files/44a4uu16LWhkeSagg5uhDHdgfj1PlLZbJctn0kNo.txt'
         ]);
+        $product4->highlights()->saveMany([
+            new \App\Models\Highlight(['content' => 'Four dashboards!']),
+            new \App\Models\Highlight(['content' => 'Clean looking UI kit!']),
+            new \App\Models\Highlight(['content' => 'Ready for implementation!'])
+        ]);
+        $product4->faqs()->saveMany([
+            new \App\Models\Faq([
+                'question' => 'Does this contain any code?',
+                'answer' => "No, this is only the user interface."
+            ])
+        ]);
+
+        $product5 = \App\Models\Product::factory()->create([
+            'title' => 'Weather UI Kit',
+            'slug' => 'weather-ui-kit',
+            'price' => '1499',
+            'description' => 'Create a weather app with this AMAZING looking UI! Created by https://dribbble.com/adam_sokolowski',
+            'image' => 'https://portfolio-ecommerce-bucket.s3.us-east-2.amazonaws.com/product-images/Koz4B9DuT9lEpzPbmsV02Oq4E5XaW9qL93W4gHpp.png',
+            'file' => 'product-files/pVshH1QjlMLKPJflEuoOZztpk51JlIA9KJpfXxeR.txt'
+        ]);
+        $product5->highlights()->saveMany([
+            new \App\Models\Highlight(['content' => 'Variety of different UI!']),
+            new \App\Models\Highlight(['content' => 'Clean looking UI kit!']),
+            new \App\Models\Highlight(['content' => 'Ready for implementation!'])
+        ]);
+        $product5->faqs()->saveMany([
+            new \App\Models\Faq([
+                'question' => 'Does this contain any code?',
+                'answer' => "No, this is only the user interface."
+            ])
+        ]);
+
         \App\Models\Role::create([
             'name' => 'user',
             'slug' => 'user'
@@ -121,8 +126,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@admin.com',
             'stripe_id' => 'cus_KIyioQI6i39w5C'
         ]);
-
-        $admin->roles()->attach($adminRole);
-        
+        $admin->roles()->attach($adminRole); 
     }
 }
