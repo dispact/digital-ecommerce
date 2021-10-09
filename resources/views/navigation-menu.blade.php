@@ -9,7 +9,7 @@
          >
             <div class="h-16 flex items-center justify-between">
                <!-- Logo -->
-               <div class="flex-1 flex items-center">
+               <div class="hidden sm:flex flex-1 items-center">
                   {{-- <a href="{{ route('product.index') }}">
                      <x-jet-application-mark class="block h-9 w-auto" />
                   </a> --}}
