@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Mail\OrderSuccess;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class OrderController extends Controller
@@ -33,7 +34,7 @@ class OrderController extends Controller
 
                 Mail::to($request->user()->email)->send(new OrderSuccess($order));
             } catch (\exception $e) {
-                dd($e);
+                Log::error('OrderController@success: ' . $e);
             }
         }
 

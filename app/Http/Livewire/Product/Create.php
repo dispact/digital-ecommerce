@@ -7,6 +7,7 @@ use App\Models\Product;
 use Livewire\Component;
 use App\Models\Highlight;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class Create extends Component
 {
@@ -77,8 +78,9 @@ class Create extends Component
 
         $this->slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $this->title)));
 
-        $photo = $this->photo->store('public/product-photos');
-        $file = $this->file->store('files');
+        $s3PhotoPath = Storage::disk('s3')->put('product-images', $this->photo);
+        $photo = Storage::disk('s3')->url($s3PhotoPath);
+        $file = Storage::disk('s3')->put('product-files', $this->file);
         
         $product = Product::create([
             'title' => $this->title,

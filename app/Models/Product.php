@@ -33,6 +33,6 @@ class Product extends Model
     }
 
     public function downloadUrl() {
-        return route('file.download', explode('/', $this->file)[1]);
+        return route('file.download', $this->slug);
     }
 }

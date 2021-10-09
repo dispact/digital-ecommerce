@@ -8,11 +8,10 @@ use Illuminate\Support\Facades\Storage;
 
 class FileController extends Controller
 {
-    function download(Request $request, $filename) {
-        $path = 'files/' . $filename;
-        $product = Product::where('file', $path)->first();
+    function download(Request $request, $slug) {
+        $product = Product::where('slug', $slug)->first();
         if ($request->user()->hasOrderedProduct($product->id))
-            return Storage::download($path);
+            return Storage::disk('s3')->download($product->file);
         else
             abort(404);
     }
